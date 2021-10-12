@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+use App\Http\Controllers\UserController;
+
+Route::get('/user/{id}/{id2}', [UserController::class, 'show'])->middleware('CheckBadIp');
+
 
 Route::get('/', function () {
     return view('welcome');

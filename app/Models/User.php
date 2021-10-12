@@ -40,4 +40,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public static function isIpAdmin($ip) {
+        if ($ip == '0.0.0.0') {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
