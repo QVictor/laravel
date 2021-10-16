@@ -13,9 +13,10 @@ use Illuminate\Http\Request;
 | contains the "web" middleware group. Now create something great!
 |
 */
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\StudentController;
 
-Route::get('/user/{id}/{id2}', [UserController::class, 'show'])->middleware('CheckBadIp');
+Route::get('add_new', [StudentController::class, 'index']);
+Route::post('save', [StudentController::class, 'save'])->name('student.save');
 
 
 Route::get('/', function () {
