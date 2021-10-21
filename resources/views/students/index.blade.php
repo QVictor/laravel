@@ -39,6 +39,7 @@
                 </div>
                 <br>
                 <button type="submit" class="btn btn-block btn-primary">Save</button>
+                {!! csrf_field() !!}
             </form>
         </div>
     </div>

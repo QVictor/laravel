@@ -7,21 +7,24 @@ $(function () {
             method:$(this).attr('method'),
             data: new FormData(this),
             processData: false,
-            dataType: 'json',
+            dataType: 'JSON',
             contentType: false,
             beforeSend: function () {
                 $(document).find('span.error-text').text('')
             },
             success: function (data) {
-                if (data.status == 0) {
-                    $.each(data.error, function (prefix, val) {
-                        $('span.' + prefix + '_error').text(val[0]);
-                    })
-                } else {
+                if (data.status == 1) {
                     $('#main_form')[0].reset();
                     alert(data.msg);
                 }
-            }
+            },
+            error: function (jqXHR, status, error) {
+                if (jqXHR.status === 422) {
+                    $.each(jqXHR.responseJSON.errors, function (prefix, val) {
+                        $('span.' + prefix + '_error').text(val[0]);
+                    });
+                }
+        }
         })
     })
 });

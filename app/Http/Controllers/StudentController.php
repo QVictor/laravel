@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SaveStudentRequest;
 use Illuminate\Http\Request;
 
 
@@ -15,25 +16,16 @@ class StudentController extends Controller
         return view('students.index');
     }
 
-    function save(Request $request) {
-        $validator = validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|email|unique:students',
-            'password' => 'required|min:5|max:12',
-        ]);
+    function save(SaveStudentRequest $request) {
 
-        if (!$validator->passes()) {
-            return response()->json(['status' => 0, 'error' => $validator->errors()->toArray()]);
-        } else {
-            $values = [
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-            ];
-            $query = DB::table('students')->insert($values);
-            if ($query) {
-                return response()->json(['status' => 1, 'msg' => 'New Student has been successfully registered']);
-            }
+        $values = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ];
+        $query = DB::table('students')->insert($values);
+        if ($query) {
+            return response()->json(['status' => 1, 'msg' => 'New Student has been successfully registered']);
         }
     }
 }
