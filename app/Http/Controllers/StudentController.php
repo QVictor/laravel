@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SaveStudentRequest;
+use App\Models\Student;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 
@@ -17,15 +19,12 @@ class StudentController extends Controller
     }
 
     function save(SaveStudentRequest $request) {
-
-        $values = [
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ];
-        $query = DB::table('students')->insert($values);
-        if ($query) {
-            return response()->json(['status' => 1, 'msg' => 'New Student has been successfully registered']);
-        }
+        $student = new Student();
+        $student->name = $request->name;
+        $student->email = $request->email;
+        $student->password = Hash::make($request->password);
+        $student->save();
+        return response()->json(['status' => 1, 'msg' => 'New Student has been successfully registered']);
     }
+
 }
